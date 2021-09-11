@@ -1,0 +1,29 @@
+{
+  "name": "fm7-provider",
+  "version": "1.0.0",
+  "description": "A middle layer that provides a frontend with Data collected by fm7-reader",
+  "main": "index.js",
+  "dependencies": {
+    "koa": "^2.13.1",
+    "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.2.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j-toscani/fm7-provider.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/j-toscani/fm7-provider/issues"
+  },
+  "homepage": "https://github.com/j-toscani/fm7-provider#readme"
+}
