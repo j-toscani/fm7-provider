@@ -1,8 +1,9 @@
+import { Binary } from "bson";
 import { BaseRepo, BaseDocument } from "../BaseRepo";
 
 export type RawRaceData = {
   hash: string;
-  data: Uint8Array[];
+  data: { sub_type: number; buffer: Buffer; position: number }[][];
   started: Date;
   lastModified: Date;
 } & BaseDocument;
