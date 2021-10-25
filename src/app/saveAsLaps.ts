@@ -1,24 +1,40 @@
 import { RawRaceData } from "../db/repos/RaceDataRaw";
 import path from "path";
 import fs from "fs";
+import decodeBuffer, { createDecoder } from "../encoding/decodeBuffer";
 
 export default async function saveAsLaps(raceData: RawRaceData) {
-  const { hash, data } = raceData;
-  const filename = getFilename(raceData);
+  const raceDataEntries = getRaceDataEntries(raceData);
 
-  const pathToDir = path.resolve(__dirname, hash);
-  await fs.promises.mkdir(pathToDir, { recursive: true });
+  const lapData = getLapData(raceDataEntries);
 
-  const stream = fs.createWriteStream(path.resolve(pathToDir, filename), {
-    flags: "a",
-  });
+  return true;
 }
 
-const formatter = new Intl.DateTimeFormat("de-DE");
+function getRaceDataEntries(raceData: RawRaceData) {
+  return raceData.data.map((data) => data[0].buffer);
+}
 
-function getFilename(data: RawRaceData) {
-  const { started } = data;
-  const startedString = formatter.format(started).split(".").join("_");
+function getLapData(raceDataEntries: Buffer[]) {
+  const decoder = createDecoder(raceDataEntries[0]);
 
-  return `${startedString}.csv`;
+  const lapsData = [];
+  const lapData = [];
+  const currentLap = 1;
+
+  for (let index = 0; index < raceDataEntries.length; index++) {
+    const entry = raceDataEntries[index];
+    const decodedData = decodeBuffer(Buffer.from(entry), decoder);
+
+    if ()
+  }
+}
+
+async function getWriteStream(hash: string, lap: number) {
+  const pathToDir = path.resolve(__dirname, "../../race_data_files", hash);
+  await fs.promises.mkdir(pathToDir, { recursive: true });
+
+  return fs.createWriteStream(path.resolve(pathToDir, filename), {
+    flags: "a",
+  });
 }
