@@ -15,7 +15,8 @@ router.get("/raw-to-laps/:id", async (ctx) => {
     return;
   }
 
-  saveAsLaps(data);
+  await saveAsLaps(data);
+  ctx.response.body = { message: "Data saved successfuly!" };
 });
 
 export default router;
