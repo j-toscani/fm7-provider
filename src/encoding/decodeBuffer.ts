@@ -2,7 +2,7 @@ import { EncodingsV2, V2 } from "../types";
 
 import all from "./all";
 
-export default function decodeBuffer(message: Uint8Array, decoder: Decoder) {
+export default function decodeBuffer(message: Buffer, decoder: Decoder) {
   let byteToRead = 0;
   const values = [];
 
