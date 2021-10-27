@@ -18,7 +18,11 @@ export default class LapDataHandler {
   }
 
   set lap(val: number) {
+    if (val === 0 && this._lap !== 0) {
+      this.course++;
+    }
     this._lap = val;
+    this.stream?.close();
     this.stream = this.getWriteStream();
   }
 
@@ -30,17 +34,18 @@ export default class LapDataHandler {
     return path.resolve(
       __dirname,
       "../../race_data_files",
-      `${this.hash}/${this.started.getTime()}${this.course}`
+      `${this.hash}/${this.started.getTime()}`
     );
   }
 
   get fileName() {
-    return `Lap_${this.lap}.csv`;
+    return `Lap_${this.lap}_${this.course}.csv`;
   }
 
   getWriteStream() {
     return fs.createWriteStream(path.resolve(this.pathToDir, this.fileName), {
       flags: "a",
+      autoClose: false,
     });
   }
 
