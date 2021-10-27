@@ -105,3 +105,6 @@ dist
 
 # Public Directory
 public/ 
+
+# Race Data
+race_data_files/
