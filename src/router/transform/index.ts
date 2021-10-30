@@ -1,17 +1,18 @@
 import { ObjectId } from "mongodb";
 import Router from "koa-router";
+
 import RawRaceDataRepo from "../../db/repos/RaceDataRaw";
 import rawToDiskLaps from "../../app/rawToDiskLaps";
 import diskLapsToDB from "../../app/diskLapsToDB";
 
-const router = new Router();
+import { KoaContext } from "../../types";
 
-router.get(
-  "/",
-  async (ctx) => (ctx.body.message = "This is a message from Transformer!")
-);
+const router = new Router({ prefix: "/transform" });
 
-router.get("/raw-to-laps/:id", async (ctx) => {
+router.get("/raw-to-laps/:id", saveRawDataToDisk);
+router.get("/disk-to-collection/:id", saveDiskDataToCollection);
+
+async function saveRawDataToDisk(ctx: KoaContext) {
   const repo = await new RawRaceDataRepo();
   const data = await repo.getOne({
     _id: new ObjectId(ctx.params.id),
@@ -23,9 +24,9 @@ router.get("/raw-to-laps/:id", async (ctx) => {
 
   await rawToDiskLaps(data);
   ctx.response.body = { message: "Data saved successfuly to disk!" };
-});
+}
 
-router.get("/disk-to-collection/:id", async (ctx) => {
+async function saveDiskDataToCollection(ctx: KoaContext) {
   const repo = await new RawRaceDataRepo();
   const data = await repo.getOne({
     _id: new ObjectId(ctx.params.id),
@@ -37,6 +38,6 @@ router.get("/disk-to-collection/:id", async (ctx) => {
 
   await diskLapsToDB(data);
   ctx.response.body = { message: "Data saved successfuly to collection!" };
-});
+}
 
 export default router;
