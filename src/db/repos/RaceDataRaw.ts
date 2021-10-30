@@ -1,4 +1,3 @@
-import { Binary } from "bson";
 import { BaseRepo, BaseDocument } from "../BaseRepo";
 
 export type RawRaceData = {
