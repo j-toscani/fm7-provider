@@ -32,14 +32,58 @@ export default async function diskLapsToDB(raceData: RawRaceData) {
     const stream = getFileDataReadStream(fileDataEntry.filename, config);
     const raceDataOfLap = await getArrayFromFileLines(stream);
 
+    const car = {
+      id: raceDataOfLap[0][53],
+      class: getCarClass(raceDataOfLap[0][54]),
+      perfIndex: raceDataOfLap[0][55],
+      driveTrain: getDrivetrain(raceDataOfLap[0][56]),
+    } as const;
+
     await repo.updateLapData(
       { user: config.user, started: new Date(config.timeStamp) },
       {
         lap: fileDataEntry.lap,
         course: fileDataEntry.course,
+        car,
         data: raceDataOfLap,
       }
     );
+  }
+}
+
+function getCarClass(carClass: number) {
+  switch (carClass) {
+    case 0:
+      return "D";
+    case 1:
+      return "C";
+    case 2:
+      return "B";
+    case 3:
+      return "A";
+    case 4:
+      return "S";
+    case 5:
+      return "R";
+    case 6:
+      return "P";
+    case 7:
+      return "X";
+    default:
+      return "E";
+  }
+}
+
+function getDrivetrain(drivetrain: number) {
+  switch (drivetrain) {
+    case 0:
+      return "FWD";
+    case 1:
+      return "RWD";
+    case 2:
+      return "AWD";
+    default:
+      return "unknown";
   }
 }
 
