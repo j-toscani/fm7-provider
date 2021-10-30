@@ -1,5 +1,5 @@
 import Koa from "koa";
-import router from "./router.ts";
+import router from "./router";
 
 import { connectDatabase } from "./db/connectDb";
 
