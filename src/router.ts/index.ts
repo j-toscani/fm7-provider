@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import Router from "koa-router";
 import RawRaceDataRepo from "../db/repos/RaceDataRaw";
-import saveAsLaps from "../app/saveAsLaps";
+import rawToDiskLaps from "../app/rawToDiskLaps";
 
 const router = new Router();
 
@@ -15,7 +15,7 @@ router.get("/raw-to-laps/:id", async (ctx) => {
     return;
   }
 
-  await saveAsLaps(data);
+  await rawToDiskLaps(data);
   ctx.response.body = { message: "Data saved successfuly!" };
 });
 

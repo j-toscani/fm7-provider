@@ -1,11 +1,10 @@
 import fs from "fs";
 
 import { RawRaceData } from "../db/repos/RaceDataRaw";
-import all from "../encoding/all";
 import decodeBuffer, { createDecoder } from "../encoding/decodeBuffer";
 import LapDataHandler from "./LapDataHandler";
 
-export default async function saveAsLaps(raceData: RawRaceData) {
+export default async function rawToDiskLaps(raceData: RawRaceData) {
   const raceDataAsBuffer = getraceDataAsBuffer(raceData);
 
   const config = {
@@ -29,8 +28,6 @@ export default async function saveAsLaps(raceData: RawRaceData) {
     }
     handler.write(decodedRaceData);
   }
-
-  return true;
 }
 
 function getraceDataAsBuffer(raceData: RawRaceData) {
