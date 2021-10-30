@@ -54,20 +54,22 @@ export default async function diskLapsToDB(raceData: RawRaceData) {
 function getCarClass(carClass: number) {
   switch (carClass) {
     case 0:
-      return "D";
+      return "E";
     case 1:
-      return "C";
+      return "D";
     case 2:
-      return "B";
+      return "C";
     case 3:
-      return "A";
+      return "B";
     case 4:
-      return "S";
+      return "A";
     case 5:
-      return "R";
+      return "S";
     case 6:
-      return "P";
+      return "R";
     case 7:
+      return "P";
+    case 8:
       return "X";
     default:
       return "E";
