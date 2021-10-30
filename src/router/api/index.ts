@@ -21,4 +21,19 @@ router.get("/sessions/:id", async (ctx) => {
   ctx.response.body = await minLapData.toArray();
 });
 
+router.get("/sessions/:id/:lapsIndex", async (ctx) => {
+  const repo = new RaceSessionRepo();
+  //   const entry = await repo.getOne({ _id: new ObjectId(ctx.params.id) });
+  const minLapData = await repo.collection.aggregate([
+    { $match: { _id: new ObjectId(ctx.params.id) } },
+    {
+      $project: {
+        first: { $arrayElemAt: ["$laps", parseInt(ctx.params.lapsIndex)] },
+      },
+    },
+  ]);
+
+  ctx.response.body = await minLapData.toArray();
+});
+
 export default router;
