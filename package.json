@@ -4,6 +4,7 @@
   "description": "A middle layer that provides a frontend with Data collected by fm7-reader",
   "main": "index.js",
   "dependencies": {
+    "@koa/cors": "^3.1.0",
     "dotenv": "^10.0.0",
     "koa": "^2.13.1",
     "koa-mount": "^4.0.0",
